@@ -12,7 +12,7 @@ const ReviewCard = ({ review }) => {
     value: review.rating,
     isHalf: true,
   };
-  console.log("response: ", window.innerWidth, review);
+  // console.log("response: ", window.innerWidth, review);
   return (
     <div className="reviewCard">
       <img src={profilePng} alt="User" />

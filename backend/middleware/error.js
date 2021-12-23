@@ -19,7 +19,7 @@ module.exports = (err, req, res, next) => {
 
         success: false,
 
-        error: err.message
+        message: err.message
         //message clear krke Stack bhi use kr skte h file errorhandler.js //
 
     });

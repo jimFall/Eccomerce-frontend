@@ -7,8 +7,8 @@ const ApiFeatures = require("../utils/apifeatures");
 
 exports.createproduct = catchAsyncError(async (req, res, next) => {
   req.body.User = req.User.id;
-
   // console.log("request: ", req.body)
+
   const Product = await product.create(req.body);
   res.status(201).json({
     success: true,
@@ -17,25 +17,31 @@ exports.createproduct = catchAsyncError(async (req, res, next) => {
 });
 //get all product
 exports.getallproduct = catchAsyncError(async (req, res, next) => {
-  // return next(new ErrorHandler("Product not Found", 404));
-
-  const resultperpage = 8;
+  const resultperpage = 5;
   const productcount = await product.countDocuments();
 
   const ApiFeature = new ApiFeatures(product.find(), req.query)
     .search()
     .filter()
-    .pagination(resultperpage);
+    // .pagination(resultperpage);
 
-  //chahe to keyword bhi use krskte h
+  let Products = await ApiFeature.query;
 
-  const Products = await ApiFeature.query;
+  
+  let filteredProductsCount = Products.length;
+
+
+  ApiFeature.pagination(resultperpage)
+
+
+  //  Products = await ApiFeature.query;
 
   res.status(200).json({
     success: true,
     Products,
     productcount,
     resultperpage,
+    filteredProductsCount
   });
 });
 
@@ -49,7 +55,6 @@ exports.getproductdelails = catchAsyncError(async (req, res, next) => {
   if (!Product) {
     return next(new ErrorHandler("Product not Found", 404));
   }
-  console.log("getproductdetalies");
 
   res.status(200).json({
     success: true,

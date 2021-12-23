@@ -5,7 +5,8 @@ import Home from "./component/Home/Home.js";
 import { BrowserRouter as Router,Route } from 'react-router-dom'
 import WebFont from "webfontloader";
 import React from "react";
-// import Product from './component/Home/Product';
+import Search from './component/Home/Search.js';
+import Products from './component/Home/Products.js';
 import ProductDetails from './component/product/ProductDetails.js';
 
 
@@ -26,6 +27,9 @@ function App() {
       <Header /> 
       <Route exact path="/" component={Home}/>
       <Route exact path="/product/:id" component={ProductDetails}/>
+      <Route exact path="/Products" component={Products}/>
+      <Route exact path="/Products/:keyword" component={Products}/>
+      <Route exact path="/Search" component={Search}/>
       <Footer/>
     </Router>
   );
