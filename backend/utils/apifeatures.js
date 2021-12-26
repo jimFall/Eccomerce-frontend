@@ -1,78 +1,65 @@
-const { json } = require("express")
+const { json } = require("express");
 
 class ApiFeatures {
+  constructor(query, querystr) {
+    this.query = query;
+    this.querystr = querystr;
+  }
 
-    constructor(query, querystr) {
+  search() {
+    const keyword = this.querystr.keyword
+      ? {
+          name: {
+            //Mongo db property regex
+            $regex: this.querystr.keyword,
+            $options: "i", //case inssensiteve agr small i ni likhuga to bo sirf capital wale seacrch krga//
+          },
+        }
+      : {};
 
-        this.query = query
-        this.querystr = querystr
-    }
-    search() {
+    this.query = this.query.find({ ...keyword });
 
+    return this;
+  }
 
-        const keyword = this.querystr.keyword
+  filter() {
+    const querycopy = { ...this.querystr };
+    console.log("querycopy", querycopy);
 
+    //Removing some feild for catergory
 
-            //ternary oprater//
-            ? {
-                name: {
-                    //Mongo db property regex
-                    $regex: this.querystr.keyword,
-                    $options: "i",  //case inssensiteve agr small i ni likhuga to bo sirf capital wale seacrch krga// 
+    const removeField = ["keyword", "page", "limit"];
 
-                },
+    // console.log("querycopy...remove before",querycopy) //remove before
 
-            } : {}
-        // console.log(keyword)
-        this.query = this.query.find({ ...keyword })
+    removeField.forEach((key) => delete querycopy[key]);
 
-        return this;
-    }
+    console.log("querycopy ..remove after",querycopy)//remove after
 
-    filter() {
+    //Filter for price and Rating
 
-        const querycopy = { ...this.querystr }
-        //Removing some feild for catergory
-        const removeField = ["keyword", "page", "limit"]
+    let querystr = JSON.stringify(querycopy); //convert to string
 
-        // console.log(querycopy) //remove before
+    // console.log('querystr...befaore',querystr)
 
-        removeField.forEach((key) => delete querycopy[key])
+    querystr = querystr.replace(/\b(gt|gte|lt|lte)\b/g, (key) => `$${key}`);
+    console.log(JSON.parse(querystr), "jfdksa")
+    this.query = this.query.find(JSON.parse(querystr)); //convert to obj i think
 
-        // console.log(querycopy)//remove after
+    // console.log('querystr..after',querystr)
 
+    return this;
+  }
 
-        //Filter for price and Rating
+  pagination(resultperpage) {
+    const currentpage = Number(this.querystr.page) || 1;
 
-        // console.log(querycopy)
+    const skip = resultperpage * (currentpage - 1);
 
-        let querystr = JSON.stringify(querycopy); //convert to string
+    this.query = this.query.limit(resultperpage).skip(skip);
 
-        querystr = querystr.replace(/\b(gt|gte|lt|lte)\b/g, key => `$${key}`)
-
-        
-
-        this.query = this.query.find(JSON.parse(querystr)) //convert to obj i think
-
-        // console.log(querystr)
-
-        return this
-    }
-
-
-    pagination(resultperpage) {
-        const currentpage = Number(this.querystr.page) || 1
-
-        const skip = resultperpage * (currentpage - 1)
-
-        this.query = this.query.limit(resultperpage).skip(skip)
-
-        return this;
-    }
-
-
+    return this;
+  }
 }
 
-module.exports = ApiFeatures
-
-
+module.exports = ApiFeatures;

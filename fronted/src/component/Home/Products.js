@@ -22,6 +22,16 @@ const categories = [
 
 const Products = ({ match }) => {
   const dispatch = useDispatch();
+
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const [price, setprice] = useState([0, 2500]);
+
+  const [category, setCategory] = useState("");
+
+  const [ratings, setRatings] = useState(0);
+
+
   const {
     products,
     loading,
@@ -31,19 +41,11 @@ const Products = ({ match }) => {
     filteredProductsCount,
   } = useSelector((state) => state.products);
 
-  const [currentPage, setCurrentPage] = useState(1);
-
-  const [price, setprice] = useState([0, 2500]);
-
-  const [category, setCategory] = useState(" ");
-
-  const [ratings,setRatings]=useState(0)
-
   const keyword = match.params.keyword;
 
   useEffect(() => {
-    dispatch(getProduct(keyword, currentPage, price, category,ratings));
-  }, [dispatch, keyword, currentPage, price, category,ratings]);
+    dispatch(getProduct(keyword, currentPage, price, category, ratings));
+  }, [dispatch, keyword, currentPage, price, category, ratings]);
 
   const setCurrentPageNo = (e) => {
     setCurrentPage(e);
@@ -79,32 +81,34 @@ const Products = ({ match }) => {
               min={0}
               max={25000}
             />
+
+
+            <Typography>Categories</Typography>
+            <ul className="categoryBox">
+              {categories.map((category) => (
+                <li
+                  className="category-link"
+                  key={category}
+                  onClick={() => setCategory(category)}
+                >
+                  {category}
+                </li>
+              ))}
+            </ul>
+            <fieldset>
+              <Typography component="legend">Ratings Above</Typography>
+              <Slider
+                value={ratings}
+                onChange={(e, newRating) => {
+                  setRatings(newRating);
+                }}
+                aria-labelledby="continuous-slider"
+                valueLabelDisplay="auto"
+                min={0}
+                max={5}
+              />
+            </fieldset>
           </div>
-          <Typography>Categories</Typography>
-          <ul className="categoryBox">
-            {categories.map((category) => (
-              <li
-                className="category-link"
-                key={category}
-                onClick={() => setCategory(category)}
-              >
-                {category}
-              </li>
-            ))}
-          </ul>
-          <fieldset>
-            <Typography component="legend">Ratings Above</Typography>
-            <Slider
-              value={ratings}
-              onChange={(e, newRating) => {
-                setRatings(newRating);
-              }}
-              aria-labelledby="continuous-slider"
-              valueLabelDisplay="auto"
-              min={0}
-              max={5}
-            />
-          </fieldset>
 
           {resultperpage < count && (
             <div className="paginationBox">

@@ -6,21 +6,25 @@ const ApiFeatures = require("../utils/apifeatures");
 //create product--Admin
 
 exports.createproduct = catchAsyncError(async (req, res, next) => {
+
   req.body.User = req.User.id;
   // console.log("request: ", req.body)
 
   const Product = await product.create(req.body);
+
   res.status(201).json({
     success: true,
     Product,
   });
 });
+
 //get all product
 exports.getallproduct = catchAsyncError(async (req, res, next) => {
   const resultperpage = 5;
   const productcount = await product.countDocuments();
 
   const ApiFeature = new ApiFeatures(product.find(), req.query)
+
     .search()
     .filter()
     // .pagination(resultperpage);
@@ -35,6 +39,7 @@ exports.getallproduct = catchAsyncError(async (req, res, next) => {
 
 
   //  Products = await ApiFeature.query;
+
 
   res.status(200).json({
     success: true,

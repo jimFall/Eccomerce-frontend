@@ -8,6 +8,7 @@ import React from "react";
 import Search from './component/Home/Search.js';
 import Products from './component/Home/Products.js';
 import ProductDetails from './component/product/ProductDetails.js';
+import LoginSingup from './component/User/LoginSingup';
 
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
       <Route exact path="/Products" component={Products}/>
       <Route exact path="/Products/:keyword" component={Products}/>
       <Route exact path="/Search" component={Search}/>
+      <Route exact path="/login" component={LoginSingup}/>
       <Footer/>
     </Router>
   );

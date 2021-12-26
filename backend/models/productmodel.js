@@ -3,7 +3,7 @@ const mongoose = require("mongoose")
 const user = require("./usermodels")
 
 
-const productschema = mongoose.Schema({
+const productschema = mongoose.Schema( {
   name: {
     type: String,
     required: [true, "please enter product name"],

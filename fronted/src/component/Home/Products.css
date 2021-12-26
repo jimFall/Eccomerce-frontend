@@ -84,6 +84,7 @@
     margin: 0.4vmax;
     cursor: pointer;
     transition: all 0.5s;
+    position: relative;
   }
   .category-link:hover {
     color: tomato;
