@@ -1,27 +1,29 @@
 const nodemailer = require("nodemailer");
 
 const sendEmail = async (options) => {
-    console.log(process.env.SMPT_SERVICE,)
-    // console.log(process.env.SMPT_MAIL,)
-    // console.log(process.env.SMPT_PASSWORD)
-    const traspoter = nodemailer.createTransport({
+  // console.log("optionsssssssssssss",options)
+//   console.log(" process.env.SMPT_SERVICE", process.env.SMPT_SERVICE);
+//   console.log("process.env.SMPT_MAIL", process.env.SMPT_MAIL);
+//   console.log("process.env.SMPT_PASSWORD", process.env.SMPT_PASSWORD);
 
-        service: process.env.SMPT_SERVICE,
+  //peramedicalcourser
 
-        auth: {
-            user: process.env.SMPT_MAIL,
-            pass: process.env.SMPT_PASSWORD,
+  const traspoter = nodemailer.createTransport({
+    service: process.env.SMPT_SERVICE,
 
-        }
-    });
-    const mailoptions = {
-        from: process.env.SMPT_MAIL,
-        to: options.email,
-        subject: options.subject,
-        text: options.message,
+    auth: {
+      user: process.env.SMPT_MAIL,
+      pass: process.env.SMPT_PASSWORD,
+    },
+  });
 
-    }
-    await traspoter.sendMail(mailoptions);
-}
+  const mailoptions = {
+    from: process.env.SMPT_MAIL,
+    to: options.email,
+    subject: options.subject,
+    text: options.message,
+  };
+  await traspoter.sendMail(mailoptions);
+};
 
-module.exports = sendEmail
+module.exports = sendEmail;

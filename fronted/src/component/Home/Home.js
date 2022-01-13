@@ -18,9 +18,7 @@ const Home = () => {
     products,
     // productcount
   } = useSelector((state) => state.products);
-  console.log( products);
-console.log(error)
-console.log(loading)
+  
   useEffect(() => {
 
     if (error) {

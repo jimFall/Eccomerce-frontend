@@ -11,7 +11,7 @@ import {
 } from "../constants/productConstants.js";
 
 export const getProduct =
-  (keyword = "", currentPage = 1, price = [0, 25000], category, ratings = 0) =>
+  (keyword = "", currentPage = 1, price = [0, 25000], catergory, ratings = 0) =>
   async (dispatch) => {
     try {
       dispatch({
@@ -19,8 +19,8 @@ export const getProduct =
       });
 
       let link = `/api/v1/products?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}`;
-      if (category) {
-        link = `/api/v1/products?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&category=${category}&ratings[gte]=${ratings}`;
+      if (catergory) {
+        link = `/api/v1/products?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&catergory=${catergory}&ratings[gte]=${ratings}`;
       }
 
       const { data } = await axios.get(link);
@@ -30,7 +30,7 @@ export const getProduct =
         payload: data,
       });
     } catch (error) {
-      console.log("error", error);
+      // console.log("error", error);
       dispatch({
         type: ALL_PRODUCT_FAIL,
         payload: error.response.data.message,

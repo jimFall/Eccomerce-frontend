@@ -1,7 +1,11 @@
 import React, { Fragment, useEffect, useState } from "react";
 import "./Products.css";
 import { useSelector, useDispatch } from "react-redux";
-import { clearErrors, getProduct } from "../../actions/ProductAction";
+import { 
+  
+  // clearErrors,
+  
+  getProduct } from "../../actions/ProductAction";
 import Typography from "@material-ui/core/Typography";
 import Loader from "../layout/loader/loader";
 import ProductCard from "./ProductCard.js";
@@ -27,7 +31,7 @@ const Products = ({ match }) => {
 
   const [price, setprice] = useState([0, 2500]);
 
-  const [category, setCategory] = useState("");
+  const [catergory, setCatergory] = useState("");
 
   const [ratings, setRatings] = useState(0);
 
@@ -44,8 +48,8 @@ const Products = ({ match }) => {
   const keyword = match.params.keyword;
 
   useEffect(() => {
-    dispatch(getProduct(keyword, currentPage, price, category, ratings));
-  }, [dispatch, keyword, currentPage, price, category, ratings]);
+    dispatch(getProduct(keyword, currentPage, price, catergory, ratings));
+  }, [dispatch, keyword, currentPage, price, catergory, ratings]);
 
   const setCurrentPageNo = (e) => {
     setCurrentPage(e);
@@ -55,6 +59,7 @@ const Products = ({ match }) => {
     setprice(newprice);
   };
   let count = filteredProductsCount;
+  
   return (
     <Fragment>
       {" "}
@@ -85,13 +90,13 @@ const Products = ({ match }) => {
 
             <Typography>Categories</Typography>
             <ul className="categoryBox">
-              {categories.map((category) => (
+              {categories.map((catergory,i) => (
                 <li
                   className="category-link"
-                  key={category}
-                  onClick={() => setCategory(category)}
+                  key={i}
+                  onClick={() => setCatergory(catergory)}
                 >
-                  {category}
+                {catergory}
                 </li>
               ))}
             </ul>

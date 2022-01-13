@@ -16,7 +16,7 @@ router.route("/logout").get(logout)
 
 router.route("/me").get(isAuthenticated, getuserdetales)
 
-router.route("/password//update").put(isAuthenticated, changeUserpassword)
+router.route("/password/update").put(isAuthenticated, changeUserpassword)
 
 router.route("/me/update").put(isAuthenticated, updateuserprofile)
 

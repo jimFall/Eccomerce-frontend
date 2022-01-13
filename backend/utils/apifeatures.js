@@ -1,6 +1,7 @@
 const { json } = require("express");
 
 class ApiFeatures {
+  
   constructor(query, querystr) {
     this.query = query;
     this.querystr = querystr;
@@ -43,7 +44,9 @@ class ApiFeatures {
     // console.log('querystr...befaore',querystr)
 
     querystr = querystr.replace(/\b(gt|gte|lt|lte)\b/g, (key) => `$${key}`);
+
     console.log(JSON.parse(querystr), "jfdksa")
+
     this.query = this.query.find(JSON.parse(querystr)); //convert to obj i think
 
     // console.log('querystr..after',querystr)
